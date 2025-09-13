@@ -23,6 +23,11 @@ export default defineConfig({
         path: "src/content/blog",
         format: "mdx",
         match: { include: "**/*.mdx" },
+        defaultItem: () => ({
+          title: "New post",
+          description: "",
+          pubDate: new Date().toISOString(),
+        }),
         fields: [
           { name: "title", label: "Title", type: "string", isTitle: true, required: true },
           { name: "description", label: "Description", type: "string" },
@@ -34,6 +39,18 @@ export default defineConfig({
         ui: {
           router: ({ document }) => `/blog/${document._sys.filename}/`,
           allowedActions: { create: true, delete: true },
+          filename: {
+            slugify: (values) => {
+              const base = (values?.title || "new-post")
+                .toString()
+                .trim()
+                .toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, "")
+                .replace(/\s+/g, "-")
+                .replace(/-+/g, "-");
+              return base || `post-${Date.now()}`;
+            },
+          },
         },
       },
     ],
