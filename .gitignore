@@ -1,3 +1,4 @@
+
 # build output
 dist/
 # generated types
@@ -22,3 +23,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+.vercel
+
+# tina cms
+.tina/
+/admin/

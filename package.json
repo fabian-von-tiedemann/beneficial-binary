@@ -5,15 +5,26 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "postbuild": "sh -c 'if [ -n \"$NEXT_PUBLIC_TINA_CLIENT_ID\" ] && [ -n \"$TINA_TOKEN\" ]; then tinacms build; else echo Skipping Tina build: no cloud credentials; fi'",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "tina:dev": "tinacms dev -c \"npm run dev\"",
+    "tina:build": "tinacms build"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.5",
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.5.1",
     "@astrojs/vercel": "^8.2.7",
+    "@tinacms/auth": "^1.1.0",
     "astro": "^5.13.7",
-    "sharp": "^0.34.3"
+    "next": "^15.5.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sharp": "^0.34.3",
+    "tinacms": "^2.8.2"
+  },
+  "devDependencies": {
+    "@tinacms/cli": "^1.10.2"
   }
 }
