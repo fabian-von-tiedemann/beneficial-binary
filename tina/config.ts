@@ -17,33 +17,12 @@ export default defineConfig({
   },
   schema: {
     collections: [
-      // MDX posts
       {
-        name: "blog_mdx",
-        label: "Blog (MDX)",
+        name: "blog",
+        label: "Blog",
         path: "src/content/blog",
         format: "mdx",
         match: { include: "**/*.mdx" },
-        fields: [
-          { name: "title", label: "Title", type: "string", isTitle: true, required: true },
-          { name: "description", label: "Description", type: "string" },
-          { name: "pubDate", label: "Published", type: "datetime", ui: { dateFormat: "YYYY-MM-DD" } },
-          { name: "updatedDate", label: "Updated", type: "datetime" },
-          { name: "heroImage", label: "Hero Image", type: "image" },
-          { name: "body", label: "Body", type: "rich-text", isBody: true },
-        ],
-        ui: {
-          router: ({ document }) => `/blog/${document._sys.filename}/`,
-          allowedActions: { create: true, delete: true },
-        },
-      },
-      // Markdown posts
-      {
-        name: "blog_md",
-        label: "Blog (MD)",
-        path: "src/content/blog",
-        format: "md",
-        match: { include: "**/*.md" },
         fields: [
           { name: "title", label: "Title", type: "string", isTitle: true, required: true },
           { name: "description", label: "Description", type: "string" },

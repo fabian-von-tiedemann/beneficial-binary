@@ -54,12 +54,15 @@ type Query {
   collections: [Collection!]!
   node(id: String): Node!
   document(collection: String, relativePath: String): DocumentNode!
-  blog(relativePath: String): Blog!
-  blogConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: BlogFilter): BlogConnection!
+  blog_mdx(relativePath: String): Blog_mdx!
+  blog_mdxConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: Blog_mdxFilter): Blog_mdxConnection!
+  blog_md(relativePath: String): Blog_md!
+  blog_mdConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: Blog_mdFilter): Blog_mdConnection!
 }
 
 input DocumentFilter {
-  blog: BlogFilter
+  blog_mdx: Blog_mdxFilter
+  blog_md: Blog_mdFilter
 }
 
 type DocumentConnectionEdges {
@@ -85,9 +88,9 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Blog | Folder
+union DocumentNode = Blog_mdx | Blog_md | Folder
 
-type Blog implements Node & Document {
+type Blog_mdx implements Node & Document {
   title: String!
   description: String
   pubDate: String
@@ -127,7 +130,7 @@ input RichTextFilter {
   exists: Boolean
 }
 
-input BlogFilter {
+input Blog_mdxFilter {
   title: StringFilter
   description: StringFilter
   pubDate: DatetimeFilter
@@ -136,15 +139,47 @@ input BlogFilter {
   body: RichTextFilter
 }
 
-type BlogConnectionEdges {
+type Blog_mdxConnectionEdges {
   cursor: String!
-  node: Blog
+  node: Blog_mdx
 }
 
-type BlogConnection implements Connection {
+type Blog_mdxConnection implements Connection {
   pageInfo: PageInfo!
   totalCount: Float!
-  edges: [BlogConnectionEdges]
+  edges: [Blog_mdxConnectionEdges]
+}
+
+type Blog_md implements Node & Document {
+  title: String!
+  description: String
+  pubDate: String
+  updatedDate: String
+  heroImage: String
+  body: JSON
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input Blog_mdFilter {
+  title: StringFilter
+  description: StringFilter
+  pubDate: DatetimeFilter
+  updatedDate: DatetimeFilter
+  heroImage: ImageFilter
+  body: RichTextFilter
+}
+
+type Blog_mdConnectionEdges {
+  cursor: String!
+  node: Blog_md
+}
+
+type Blog_mdConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [Blog_mdConnectionEdges]
 }
 
 type Mutation {
@@ -153,20 +188,33 @@ type Mutation {
   deleteDocument(collection: String, relativePath: String!): DocumentNode!
   createDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
   createFolder(collection: String, relativePath: String!): DocumentNode!
-  updateBlog(relativePath: String!, params: BlogMutation!): Blog!
-  createBlog(relativePath: String!, params: BlogMutation!): Blog!
+  updateBlog_mdx(relativePath: String!, params: Blog_mdxMutation!): Blog_mdx!
+  createBlog_mdx(relativePath: String!, params: Blog_mdxMutation!): Blog_mdx!
+  updateBlog_md(relativePath: String!, params: Blog_mdMutation!): Blog_md!
+  createBlog_md(relativePath: String!, params: Blog_mdMutation!): Blog_md!
 }
 
 input DocumentUpdateMutation {
-  blog: BlogMutation
+  blog_mdx: Blog_mdxMutation
+  blog_md: Blog_mdMutation
   relativePath: String
 }
 
 input DocumentMutation {
-  blog: BlogMutation
+  blog_mdx: Blog_mdxMutation
+  blog_md: Blog_mdMutation
 }
 
-input BlogMutation {
+input Blog_mdxMutation {
+  title: String
+  description: String
+  pubDate: String
+  updatedDate: String
+  heroImage: String
+  body: JSON
+}
+
+input Blog_mdMutation {
   title: String
   description: String
   pubDate: String

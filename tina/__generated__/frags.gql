@@ -1,4 +1,14 @@
-fragment BlogParts on Blog {
+fragment Blog_mdxParts on Blog_mdx {
+  __typename
+  title
+  description
+  pubDate
+  updatedDate
+  heroImage
+  body
+}
+
+fragment Blog_mdParts on Blog_md {
   __typename
   title
   description

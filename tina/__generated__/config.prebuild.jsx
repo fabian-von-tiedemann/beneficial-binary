@@ -21,6 +21,7 @@ var config_default = defineConfig({
         label: "Blog",
         path: "src/content/blog",
         format: "mdx",
+        match: { include: "**/*.mdx" },
         fields: [
           { name: "title", label: "Title", type: "string", isTitle: true, required: true },
           { name: "description", label: "Description", type: "string" },
@@ -30,7 +31,8 @@ var config_default = defineConfig({
           { name: "body", label: "Body", type: "rich-text", isBody: true }
         ],
         ui: {
-          router: ({ document }) => `/blog/${document._sys.filename}/`
+          router: ({ document }) => `/blog/${document._sys.filename}/`,
+          allowedActions: { create: true, delete: true }
         }
       }
     ]
