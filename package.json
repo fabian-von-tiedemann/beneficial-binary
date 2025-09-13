@@ -3,9 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "prebuild": "sh -c 'if [ -n \"$NEXT_PUBLIC_TINA_CLIENT_ID\" ] && [ -n \"$TINA_TOKEN\" ]; then tinacms build; else echo Skipping Tina prebuild: no cloud credentials; fi'",
     "dev": "astro dev",
     "build": "astro build",
-    "postbuild": "sh -c 'if [ -n \"$NEXT_PUBLIC_TINA_CLIENT_ID\" ] && [ -n \"$TINA_TOKEN\" ]; then tinacms build; else echo Skipping Tina build: no cloud credentials; fi'",
+    "postbuild": "echo Tina postbuild skipped",
     "preview": "astro preview",
     "astro": "astro",
     "tina:dev": "tinacms dev -c \"npm run dev\"",
